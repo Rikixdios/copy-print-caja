@@ -1,0 +1,107 @@
+/* One document layout for the compact preview and the full-size image download. */
+.order-document{--order-unit:1cqw;width:100%;container-type:inline-size;color-scheme:light}
+.order-document-sheet{width:100%;overflow:hidden;border-radius:calc(var(--order-unit) * 2);background:#fff;color:#090a0b;font-family:Arial,sans-serif;font-size:calc(var(--order-unit) * 3.5);line-height:1.45;text-align:left}
+.order-document-sheet *{box-sizing:border-box}.order-document-sheet p{margin:0}.order-document-sheet b{font-weight:700}
+.order-document-header{padding:calc(var(--order-unit) * 4) calc(var(--order-unit) * 3) calc(var(--order-unit) * 3);background:linear-gradient(120deg,#6861ef 0%,#8756f8 100%);color:#fff;text-align:center}
+.order-document-brand{display:flex;justify-content:center;align-items:center;gap:calc(var(--order-unit) * 4);margin:0 auto calc(var(--order-unit) * 3)}.order-document-brand .order-document-logo{display:block;width:55%;height:auto;filter:none;background:#fff;border-radius:calc(var(--order-unit) * 1);padding:calc(var(--order-unit) * 1.5) calc(var(--order-unit) * 2);object-fit:contain}.order-document-brand.with-christmas{min-height:calc(var(--order-unit) * 15)}.order-document-brand .order-document-reindeer{display:block;width:29%;height:auto;filter:none;object-fit:contain;margin:calc(var(--order-unit) * -2) 0}
+.order-document-number{display:table;margin:0 auto calc(var(--order-unit) * 4.7);padding:calc(var(--order-unit) * 1.3) calc(var(--order-unit) * 3);border-radius:calc(var(--order-unit) * 1);background:#ffffff30;font-size:calc(var(--order-unit) * 3.5);line-height:1.25;color:#fff}
+.order-document-header p{font-size:calc(var(--order-unit) * 3);margin:0 0 calc(var(--order-unit) * 2.2)}.order-document-dates{display:grid;grid-template-columns:43% 57%;font-size:calc(var(--order-unit) * 3);gap:0;line-height:1.4}
+.order-document-customer{display:flex;justify-content:space-between;align-items:flex-start;gap:calc(var(--order-unit) * 3);padding:calc(var(--order-unit) * 6) calc(var(--order-unit) * 4) calc(var(--order-unit) * 3.2);background:#f8f9fa;border-bottom:1px solid #e4e6e9}.order-document-customer p{margin:0 0 calc(var(--order-unit) * .5);overflow-wrap:anywhere}.order-document-customer>p{max-width:38%}
+.order-document-invoice{background:#f8f9fa;padding:calc(var(--order-unit) * 2) calc(var(--order-unit) * 4);border-bottom:1px solid #e4e6e9;font-size:calc(var(--order-unit) * 2.8)}
+.order-document-products{padding:calc(var(--order-unit) * 6.5) calc(var(--order-unit) * 4)}.order-document-products table{border-collapse:collapse;width:100%;table-layout:fixed}.order-document-products th{background:#f1f2f4;font-size:calc(var(--order-unit) * 3);padding:calc(var(--order-unit) * 3.5) calc(var(--order-unit) * 2) calc(var(--order-unit) * 1);font-weight:700;text-align:left}.order-document-products th:nth-child(1){width:14%}.order-document-products th:nth-child(2){width:34%}.order-document-products th:nth-child(3){width:24%}.order-document-products th:nth-child(4){width:28%}.order-document-products th:nth-child(n+3),.order-document-products td:nth-child(n+3){text-align:right}.order-document-products td{padding:calc(var(--order-unit) * 3.5) calc(var(--order-unit) * 2) 0;border-bottom:1px solid #e4e6e9;vertical-align:top;overflow-wrap:anywhere}.order-document-products td:nth-child(n+3){font-size:calc(var(--order-unit) * 3.3)}.order-document-notes{padding-top:calc(var(--order-unit) * 3);font-size:calc(var(--order-unit) * 2.8);white-space:pre-wrap;overflow-wrap:anywhere}
+.order-document-totals{padding:calc(var(--order-unit) * 6.5) calc(var(--order-unit) * 4) calc(var(--order-unit) * 2.5);background:#f8f9fa;border-block:1px solid #e4e6e9}.order-document-totals>div{display:flex;justify-content:space-between;gap:calc(var(--order-unit) * 3);margin-bottom:calc(var(--order-unit) * 1)}.order-document-totals>div>span:last-child,.order-document-totals>div>b:last-child{white-space:nowrap}.order-document-totals .order-document-balance{margin:0;padding-top:calc(var(--order-unit) * 3.5);border-top:1px solid #cfd3d8}.order-document-balance>b:last-child{color:#cf2828}.order-document-payment-note,.order-document-proposed{font-size:calc(var(--order-unit) * 2.3);color:#6c727a;margin-bottom:calc(var(--order-unit) * 1.5)!important}
+.order-document-footer{padding:calc(var(--order-unit) * 4) calc(var(--order-unit) * 3) calc(var(--order-unit) * 2);font-size:calc(var(--order-unit) * 2.5);color:#20252d}.order-document-footer>strong{font-size:calc(var(--order-unit) * 2.5)}.order-document-footer ul{margin:calc(var(--order-unit) * 1) 0 calc(var(--order-unit) * 1);padding-left:calc(var(--order-unit) * 4.5);list-style:none}.order-document-footer li{margin:0;line-height:1.4}.order-document-footer>div{border:1px solid #efcdd1;border-radius:calc(var(--order-unit) * 1.5);background:#fff3f4;color:#b6222b;text-align:center;font-size:calc(var(--order-unit) * 3);font-weight:700;padding:calc(var(--order-unit) * 3.5) calc(var(--order-unit) * 1) calc(var(--order-unit) * .5)}
+.order-preview-card .order-document{border-radius:0 0 14px 14px;overflow:hidden}.order-preview-card .order-document-sheet{border-radius:0}
+
+/* Seasonal work-order header; quotes retain their existing header. */
+/* The same image is decoded and embedded for previews and PNG downloads.
+   All order text stays on solid light surfaces, independent of the artwork. */
+.order-document-header-christmas{padding:0;background:#f2f5fb;color:#18243b;border-bottom:1px solid #dce3ef}
+.order-document-cover{display:block;width:100%;height:auto;aspect-ratio:2048/682;object-fit:contain;background:#dee7fc}
+.order-document-header-christmas .order-document-heading{padding:calc(var(--order-unit) * 4) calc(var(--order-unit) * 4) calc(var(--order-unit) * 3.5)}
+.order-document-header-christmas .order-document-brand{min-height:0;margin:0 auto calc(var(--order-unit) * 2.8);gap:0}
+.order-document-header-christmas .order-document-logo{width:52%;height:auto;background:transparent;padding:0;border-radius:0;filter:none}
+.order-document-header-christmas .order-document-number{max-width:100%;margin:0 auto calc(var(--order-unit) * 3);padding:calc(var(--order-unit) * 1.5) calc(var(--order-unit) * 3);border-radius:calc(var(--order-unit) * 1.3);background:#202e4b;color:#fff;overflow-wrap:anywhere}
+.order-document-header-christmas p{margin-bottom:calc(var(--order-unit) * 2.8);color:#25344d;line-height:1.5}
+.order-document-header-christmas .order-document-dates{grid-template-columns:1fr 1fr;gap:calc(var(--order-unit) * 2);color:#18243b}
+.order-document-header-christmas .order-document-dates>span{padding:calc(var(--order-unit) * 2) calc(var(--order-unit) * 1);background:#fff;border:1px solid #d9e1ee;border-radius:calc(var(--order-unit) * 1);overflow-wrap:anywhere}
+.order-document-brand:not(.with-christmas) .order-document-logo{filter:invert(1);background:transparent;padding:0;border-radius:0}
+
+/* Christmas accents shared by the on-screen order and the downloaded image. */
+.order-document-seasonal .order-document-header-christmas{background:#f1faf4;color:#143a2a;border-color:#a8d7bb}
+.order-document-seasonal .order-document-number{background:#e71936;color:#fff;border:1px solid #c90b27}
+.order-document-seasonal .order-document-header-christmas p{color:#214432}
+.order-document-seasonal .order-document-dates>span{border-color:#b6d9c4;border-top:calc(var(--order-unit) * .7) solid #14764a;color:#163e2b}
+.order-document-seasonal .order-document-customer{background:#fffaf7;border-top:calc(var(--order-unit) * .7) solid #e71936;border-bottom-color:#e8dcd5}
+.order-document-seasonal .order-document-products th{background:#14613e;color:#fff;padding:calc(var(--order-unit) * 2);line-height:1.4}
+.order-document-seasonal .order-document-products td{border-bottom-color:#dce9e0}
+.order-document-seasonal .order-document-totals{background:#f0f8f2;border-color:#c2ddcb}
+.order-document-seasonal .order-document-balance{border-color:#b0d0bc}
+.order-document-seasonal .order-document-balance>b:last-child{color:#d71030}
+.order-document-seasonal .order-document-footer>strong{color:#14613e}
+.order-document-seasonal .order-document-footer>div{background:#d71030;color:#fff;border-color:#e8ba58;padding:calc(var(--order-unit) * 2) calc(var(--order-unit) * 1);margin-top:calc(var(--order-unit) * 2)}
+
+/* Stable wrapping in the live document and in the detached PNG capture. */
+.order-document-number{display:inline-flex;flex-direction:column;align-items:center;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.order-document-number[data-order-code="true"]{white-space:nowrap;word-break:normal;overflow-wrap:normal!important}
+.order-document-date-label,.order-document-date-value,.order-document-time{display:block}
+.order-document-date-value,.order-document-time{white-space:nowrap}
+.order-document-dates{align-items:stretch}
+.order-document-products th:nth-child(1){width:9%}
+.order-document-products th:nth-child(2){width:42%}
+.order-document-products th:nth-child(3){width:23%}
+.order-document-products th:nth-child(4){width:26%}
+.order-document-products th{white-space:nowrap}
+.order-document-customer{padding-top:calc(var(--order-unit) * 4)}
+.order-document-products{padding-block:calc(var(--order-unit) * 4)}
+.order-document-products td{padding-top:calc(var(--order-unit) * 2);padding-bottom:calc(var(--order-unit) * 2)}
+.order-document-totals{padding-top:calc(var(--order-unit) * 4)}
+
+/* The supplied holiday logo stays in the existing centered brand slot. */
+.order-document-seasonal .order-document-logo{width:52%;height:auto;object-fit:contain;border-radius:calc(var(--order-unit) * 1)}
+.order-document-seasonal{--order-red-gradient:linear-gradient(180deg,#f51b3c 0%,#df1031 48%,#b40724 100%);--order-green-gradient:linear-gradient(180deg,#16884e 0%,#106b40 48%,#075332 100%)}
+.order-document-seasonal .order-document-number,.order-document-seasonal .order-document-footer>div{background:var(--order-red-gradient);box-shadow:inset 0 1px 0 #ffffff40;color:#fff}
+.order-document-seasonal .order-document-products th{background:var(--order-green-gradient);box-shadow:inset 0 1px 0 #ffffff30;color:#fff}
+.order-document-seasonal .order-document-header-christmas{background:linear-gradient(180deg,#fff 0%,#e8f5ec 100%)}
+.order-document-seasonal .order-document-totals{background:linear-gradient(180deg,#f6fcf7 0%,#e3f1e8 100%)}
+
+/* Purple winter document: opaque dark panels keep every field readable. */
+.order-document-seasonal{
+  --order-purple-panel:linear-gradient(180deg,#50317e 0%,#352058 54%,#25143f 100%);
+  --order-purple-highlight:linear-gradient(180deg,#7750ac 0%,#4b287b 100%);
+  background-color:#481b79;background-image:url('/christmas/order-background-purple.png');
+  background-position:center;background-size:100% 100%;background-repeat:no-repeat;color:#fff;
+  padding-bottom:calc(var(--order-unit) * 3);
+}
+.order-document-seasonal .order-document-header-christmas{background:transparent;border:0;color:#fff}
+.order-document-seasonal .order-document-cover{border-bottom:calc(var(--order-unit) * .4) solid #e3c581}
+.order-document-seasonal .order-document-heading{padding:calc(var(--order-unit) * 3) calc(var(--order-unit) * 3) calc(var(--order-unit) * 1)}
+.order-document-seasonal .order-document-brand{margin-bottom:calc(var(--order-unit) * 2)}
+.order-document-seasonal .order-document-logo{width:58%;background:transparent;filter:none}
+.order-document-seasonal .order-document-number{background:var(--order-purple-panel);border:1px solid #e7c47c;color:#fff;box-shadow:inset 0 1px 0 #ffffff38,0 2px 5px #1c0b4140;margin-bottom:calc(var(--order-unit) * 2)}
+.order-document-seasonal .order-document-header-christmas .order-document-heading>p{color:#fff;background:var(--order-purple-panel);border:1px solid #bb98d67d;border-radius:calc(var(--order-unit) * 1.5);padding:calc(var(--order-unit) * 1.8);margin:0 0 calc(var(--order-unit) * 1);line-height:1.45}
+.order-document-seasonal .order-document-customer,.order-document-seasonal .order-document-invoice,.order-document-seasonal>.order-document-dates,.order-document-seasonal .order-document-products,.order-document-seasonal .order-document-totals,.order-document-seasonal .order-document-footer{
+  margin:calc(var(--order-unit) * 2) calc(var(--order-unit) * 3) 0;
+  padding:calc(var(--order-unit) * 3);border:1px solid #ba99d68c;border-radius:calc(var(--order-unit) * 2);
+  background:var(--order-purple-panel);color:#fff;box-shadow:inset 0 1px 0 #ffffff1f,0 2px 5px #1d093140;
+}
+.order-document-seasonal .order-document-customer{border-top:1px solid #ba99d68c}
+.order-document-seasonal>.order-document-dates{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:calc(var(--order-unit) * 2);padding:calc(var(--order-unit) * 2);font-size:calc(var(--order-unit) * 3);color:#fff}
+.order-document-seasonal>.order-document-dates>span{background:linear-gradient(180deg,#432268,#2a174a);border:1px solid #a98ac17a;border-radius:calc(var(--order-unit) * 1.3);padding:calc(var(--order-unit) * 2) calc(var(--order-unit) * .8);text-align:center;color:#fff}
+.order-document-seasonal .order-document-date-label{color:#eadcfb;margin-bottom:calc(var(--order-unit) * .5)}
+.order-document-seasonal .order-document-date-value{font-weight:700}
+.order-document-seasonal .order-document-time{color:#fff}
+.order-document-seasonal .order-document-products table{color:#fff}
+.order-document-seasonal .order-document-products th{background:var(--order-purple-highlight);color:#fff;border-bottom:1px solid #dcc5f48c;box-shadow:inset 0 1px 0 #ffffff30}
+.order-document-seasonal .order-document-products td{color:#fff;border-bottom-color:#b08dcc66}
+.order-document-seasonal .order-document-notes{color:#fff}
+.order-document-seasonal .order-document-totals{color:#fff;background:var(--order-purple-panel)}
+.order-document-seasonal .order-document-totals>div:first-child{font-size:calc(var(--order-unit) * 3.7);padding-bottom:calc(var(--order-unit) * 1);border-bottom:1px solid #b08dcc66}
+.order-document-seasonal .order-document-balance{border-top-color:#c8a9e18c}
+.order-document-seasonal .order-document-balance>b:last-child{color:#ffe19a}
+.order-document-seasonal .order-document-payment-note,.order-document-seasonal .order-document-proposed{color:#eadcfb}
+.order-document-seasonal .order-document-footer{color:#fff;font-size:calc(var(--order-unit) * 2.6)}
+.order-document-seasonal .order-document-footer>strong{color:#ffe19a}
+.order-document-seasonal .order-document-footer ul{padding-left:0;line-height:1.5;margin-block:calc(var(--order-unit) * 1.5)}
+.order-document-seasonal .order-document-footer li{line-height:1.5}
+.order-document-seasonal .order-document-footer>div{background:var(--order-purple-highlight);border:1px solid #e7c47c;color:#fff;padding:calc(var(--order-unit) * 2);box-shadow:inset 0 1px 0 #ffffff38}

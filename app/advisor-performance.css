@@ -1,0 +1,99 @@
+.advisor-performance-view{min-width:0}.performance-caption{display:flex;align-items:center;gap:6px;color:var(--muted-foreground);font-size:12px}
+.performance-controls{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px}.performance-periods{display:flex;gap:4px;padding:3px;background:var(--muted);border-radius:9px}.performance-periods button{background:transparent;color:var(--muted-foreground);border:0;border-radius:7px;padding:7px 11px;min-height:32px;font-size:12px}.performance-periods button[aria-pressed=true]{background:#253b61;color:#c9dfff}.performance-controls label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted-foreground)}.performance-controls input,.performance-controls select{height:34px;min-height:34px;padding:5px 8px;font-size:12px;background:var(--muted);color:var(--foreground);max-width:165px}.performance-controls .performance-sort{margin-left:auto}
+.performance-totals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.performance-totals>div{padding:15px 18px;background:var(--card);border:1px solid var(--border);border-radius:12px;display:grid;gap:5px}.performance-totals span{color:var(--muted-foreground);font-size:12px}.performance-totals strong{font-size:21px;color:var(--foreground);font-weight:650;overflow-wrap:anywhere}.performance-totals>div:nth-child(3){border-color:#435978;background:#202c40}.performance-totals>div:nth-child(3) strong{color:#8ebdff}
+.performance-table-scroll{overflow-x:auto;background:var(--card);border:1px solid var(--border);border-radius:12px}.performance-table{width:100%;border-collapse:collapse;min-width:980px;font-size:12px}.performance-table caption{text-align:left;padding:14px 16px;color:var(--muted-foreground);font-size:12px}.performance-table th,.performance-table td{padding:12px 13px;text-align:right;border-top:1px solid var(--border);white-space:nowrap}.performance-table thead th{font-size:11px;background:var(--muted);color:var(--muted-foreground);font-weight:600}.performance-table th:first-child,.performance-table td:last-child,.performance-table th:last-child{text-align:left}.performance-table tbody th{font-size:13px;font-weight:600}.performance-table .performance-collected{color:#8ebdff;font-weight:600}.performance-table tfoot{font-weight:700;background:var(--muted)}.performance-table td:last-child{width:180px}.performance-bar{width:155px;max-width:100%;height:6px;overflow:hidden;background:#303847;border-radius:5px;margin-bottom:5px}.performance-bar span{display:block;height:100%;background:var(--cp-blue-gradient);border-radius:5px}.performance-table small{font-size:10px;color:var(--muted-foreground)}.performance-table tbody tr:hover{background:#202938}
+.performance-explanation{margin-top:16px;color:var(--muted-foreground);font-size:12px}.performance-explanation summary{cursor:pointer;display:inline-block;font-weight:500}.performance-explanation p{margin:10px 0;max-width:850px;line-height:1.6}.performance-empty{padding:14px;color:var(--muted-foreground);font-size:13px}.performance-validation{font-size:12px;color:#f3c875;padding:10px 12px;border:1px solid #695330;background:#3a301c;border-radius:8px}
+@media(max-width:900px){.performance-totals{grid-template-columns:repeat(2,minmax(0,1fr))}.performance-controls .performance-sort{margin-left:0}}@media(max-width:560px){.performance-caption{display:none}.performance-controls{gap:10px}.performance-periods{width:100%;justify-content:space-between}.performance-totals{gap:8px}.performance-totals>div{padding:12px}.performance-totals strong{font-size:17px}}
+.management-view .performance-bar{height:10px}
+.performance-color-key{font-size:12px;line-height:1.7;color:#b6c2d4;margin:10px 0 14px}
+.productivity-export-dialog{max-width:520px!important;max-height:90vh;overflow-y:auto}
+.productivity-export-dialog>p{font-size:13px;line-height:1.6;color:#c1cbd9}
+.productivity-export-dialog .productivity-export-period{font-weight:600}
+.productivity-export-actions{display:flex;gap:8px;flex-wrap:wrap}
+.productivity-export-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:280px;overflow-y:auto}
+.productivity-export-list label{display:flex;align-items:center;gap:9px;border:1px solid #354154;border-radius:8px;padding:12px;cursor:pointer;font-size:13px;min-width:0}
+.productivity-export-list label:has(input:checked){border-color:#7e8da5;background:#252c38}
+.productivity-export-list input{width:17px;height:17px;flex:none}
+.productivity-export-dialog .productivity-export-help{font-size:12px;color:#aab5c6}
+@media(max-width:480px){.productivity-export-list{grid-template-columns:1fr}}
+/* Compact Gerencia layout for phone screens only; desktop and PDF stay unchanged. */
+@media screen and (max-width:640px){
+ .management-view{min-width:0;max-width:100%}
+ .management-view .management-heading{gap:10px}
+ .management-view .management-heading h1{font-size:22px}
+ .management-view .management-heading p{font-size:12px;line-height:1.4;margin:3px 0}
+ .management-view .management-report-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;gap:6px}
+ .management-view .management-report-actions>button{height:auto;min-height:38px;white-space:normal;font-size:11px;line-height:1.3;padding:8px}
+ .management-view .management-report-actions>button:first-child{grid-column:1/-1}
+ .management-view .management-tabs{flex-wrap:nowrap;overflow-x:auto;max-width:100%;gap:5px;margin:12px 0;padding-bottom:4px}
+ .management-view .management-tabs button{flex:none;padding:8px 10px;font-size:12px}
+ .management-view .management-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;padding:10px}
+ .management-view .management-periods{grid-column:1/-1;gap:5px}
+ .management-view .management-periods button{min-height:34px;height:auto;font-size:11px;padding:7px 9px}
+ .management-view .management-filters label{min-width:0;gap:4px;font-size:11px}
+ .management-view .management-filters label:nth-child(4){grid-column:1/-1}
+ .management-view .management-filters select{min-width:0;width:100%;min-height:36px;padding:7px;font-size:13px}
+ .management-view .management-period-note{font-size:11px;line-height:1.5;margin:10px 0}
+ .management-view .management-metrics,.management-view .performance-totals{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0}
+ .management-view .management-metric,.management-view .performance-totals>div{padding:10px;gap:4px;min-width:0}
+ .management-view .management-metric strong,.management-view .performance-totals strong{font-size:16px;line-height:1.3;overflow-wrap:anywhere}
+ .management-view .management-metric span,.management-view .performance-totals span{font-size:11px;line-height:1.3}
+ .management-view .management-metric small{font-size:10px;line-height:1.4}
+ .management-view .advisor-performance-view .section-head{margin:12px 0 8px}
+ .management-view .advisor-performance-view h1{font-size:19px;line-height:1.3}
+ .management-view .management-performance-sort{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;font-size:12px}
+ .management-view .management-performance-sort select{min-width:0;width:100%;font-size:13px;min-height:36px}
+ .management-view .performance-color-key{font-size:11px;line-height:1.5;margin:8px 0 10px}
+ .management-view .performance-table-scroll{border:0;background:transparent;overflow:visible}
+ .management-view .performance-table{display:block;width:100%;min-width:0;font-size:12px;border:0}
+ .management-view .performance-table caption{display:block;padding:0 0 8px;font-size:11px}
+ .management-view .performance-table thead{display:none}
+ .management-view .performance-table tbody,.management-view .performance-table tfoot{display:grid;gap:8px;background:transparent}
+ .management-view .performance-table tfoot{margin-top:8px}
+ .management-view .performance-table tbody tr,.management-view .performance-table tfoot tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px}
+ .management-view .performance-table th,.management-view .performance-table td{display:block;min-width:0;width:auto;padding:0;border:0;text-align:left;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
+ .management-view .performance-table th[scope=row]{grid-column:1/-1;font-size:14px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+ .management-view .performance-table td[data-label]:before{content:attr(data-label);display:block;color:var(--muted-foreground);font-weight:400;font-size:10px;line-height:1.4;margin-bottom:2px}
+ .management-view .performance-table tbody td:last-child{grid-column:1/-1;width:100%;padding-top:3px}
+ .management-view .performance-table tfoot td:last-child{display:none}
+ .management-view .performance-bar{width:100%;height:10px;margin:4px 0}
+ .management-view .performance-table small{font-size:11px}
+ .management-view .management-help,.management-view .performance-explanation{font-size:11px;line-height:1.5}
+ .management-view .management-overview{gap:9px}
+ .management-view .management-overview>section{padding:0 12px 12px}
+ .management-view h2{font-size:17px;margin:14px 0 9px}
+ .productivity-export-dialog{width:calc(100vw - 24px)!important;max-height:88dvh;padding:16px!important;gap:10px!important}
+ .productivity-export-dialog>p{font-size:12px;line-height:1.4}
+ .productivity-export-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-height:220px}
+ .productivity-export-list label{padding:9px;gap:7px;min-height:40px;font-size:12px}
+ .productivity-export-list label span{overflow-wrap:anywhere}
+ .productivity-export-actions button{font-size:11px;min-height:36px}
+}
+.performance-advisor-selection{border:1px solid var(--border);border-radius:10px;padding:12px;margin:12px 0 16px;min-width:0}
+.performance-advisor-selection legend{font-size:13px;font-weight:600;padding:0 6px}
+.performance-selection-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;font-size:12px}
+.performance-selection-actions button{padding:7px 10px;min-height:34px;border:1px solid var(--border);border-radius:7px;cursor:pointer}
+.performance-selection-actions span{color:var(--muted-foreground)}
+.performance-selection-options{display:flex;flex-wrap:wrap;gap:8px}
+.performance-selection-options label{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;cursor:pointer;min-height:38px}
+.performance-selection-options label:has(input:checked){background:#252c38;border-color:#8290a4}
+.performance-selection-options input{width:16px;height:16px}
+@media screen and (max-width:640px){.performance-advisor-selection{padding:9px;margin:10px 0}.performance-selection-actions{gap:6px;font-size:11px}.performance-selection-actions button{font-size:11px;padding:6px 8px}.performance-selection-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.performance-selection-options label{font-size:12px;padding:8px;overflow-wrap:anywhere}.performance-selection-options input{flex:none}}
+/* Small dropdown instead of a permanently expanded adviser selection box. */
+.performance-advisor-selection{position:relative;width:fit-content;max-width:100%;padding:0;margin:10px 0 12px;border:0}
+.performance-advisor-selection>summary{cursor:pointer;border:1px solid var(--border);border-radius:7px;background:var(--card);padding:8px 12px;font-size:12px;min-height:36px}
+.performance-selector-panel{position:absolute;top:calc(100% + 5px);left:0;z-index:40;width:min(330px,calc(100vw - 50px));padding:10px;border:1px solid #526078;border-radius:9px;background:#1b1f27;box-shadow:0 8px 24px #0005}
+.performance-selector-panel .performance-selection-actions{gap:6px;margin-bottom:8px}
+.performance-selector-panel .performance-selection-actions button{font-size:11px;padding:5px 10px;min-height:30px}
+.performance-selector-panel .performance-selection-actions button:last-child{margin-left:auto}
+.performance-selector-panel .performance-selection-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;max-height:190px;overflow-y:auto}
+.performance-selector-panel .performance-selection-options label{padding:7px;font-size:12px;min-height:34px;gap:6px;overflow-wrap:anywhere}
+.performance-selector-panel input{flex:none}
+.productivity-export-dialog{max-width:380px!important;max-height:75dvh;padding:16px!important;gap:9px!important}
+.productivity-export-dialog h2{font-size:17px}
+.productivity-export-dialog>p{font-size:12px;line-height:1.4}
+.productivity-export-dialog .productivity-export-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:180px;gap:5px}
+.productivity-export-dialog .productivity-export-list label{font-size:12px;padding:7px;min-height:34px}
+.productivity-export-dialog .productivity-export-help{font-size:11px}
+@media screen and (max-width:640px){.performance-advisor-selection{padding:0}.productivity-export-dialog{width:min(380px,calc(100vw - 24px))!important}}
+.productivity-export-options{display:grid;gap:9px}.productivity-export-options label{display:grid;gap:5px;font-size:12px;color:#d2dbe6}.productivity-export-options select,.productivity-export-options input{width:100%;min-width:0;padding:8px;border:1px solid #354154;border-radius:7px;background:#17202d;color:#f1f5f9;font:inherit}.productivity-export-options small{font-size:11px;line-height:1.45;color:#aab5c6}

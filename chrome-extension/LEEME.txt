@@ -1,0 +1,33 @@
+COPY PRINT — EXTENSIÓN PARA CHROME EN COMPUTADORA
+
+INSTALAR
+1. Descargá este ZIP y extraelo en una carpeta que puedas conservar.
+2. En Chrome, escribí chrome://extensions en la barra de direcciones.
+3. Activá “Modo de desarrollador”, arriba a la derecha.
+4. Elegí “Cargar descomprimida”.
+5. Seleccioná la carpeta CopyPrint-Chrome que contiene manifest.json.
+6. Tocá el icono de extensiones (la pieza de rompecabezas) y fijá Copy Print.
+7. Abrí WhatsApp Web y tocá el icono CP. El formulario aparece al costado.
+
+USAR
+Elegí tu asesor, cargá el cliente y agregá productos.
+Guardar pedido: aparece en el historial del asesor.
+Enviar a caja: aparece en Cobrar o Señas y saldos, según el pago previsto.
+Presupuesto: guardá un borrador o creá el presupuesto para luego imprimir,
+descargar o compartirlo desde la sección Presupuestos de la caja completa.
+El pago previsto se confirma en caja. No representa dinero ya cobrado.
+La caja debe estar abierta para enviar un pedido o solicitar una seña.
+Podés pegar mensajes en Notas. El panel no lee ni envía mensajes de WhatsApp.
+
+GUARDADO
+No vuelvas a cargar un registro que indique Pendiente. Tocá Reintentar:
+se usa el mismo identificador para confirmar sin duplicar.
+El formulario y los registros pendientes se conservan en esta instalación
+al cerrar el panel o Chrome. Una vez confirmado, aparece en la misma caja.
+
+IMPORTANTE
+Esta versión se instala en Chrome de computadora. Conservá la carpeta
+extraída; Chrome la usa para abrir la extensión. No está publicada en la tienda.
+Se conecta únicamente a https://copyprint-caja.allacces.chatgpt.site.
+No incluye contraseñas ni tokens. Usa el acceso que ya tenga tu sistema.
+Para abrir la caja completa, usá el enlace “Abrir caja” del panel.

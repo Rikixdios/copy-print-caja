@@ -1,0 +1,13 @@
+const fs=require('node:fs'),ts=require('typescript'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync('app/dashboard.tsx','utf8');
+const workflow={exports:{}};vm.runInNewContext(ts.transpileModule(fs.readFileSync('app/order-workflow.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,workflow);
+for(const role of ['asesor','admin','cajera'])for(const destination of ['abonar','actualizar','enviar']){
+ let state={orders:[{id:'CP-1',customer:'Cliente',advisor:'Diana',total:500000,status:'pendiente',items:[{id:1,name:'Pedido',price:500000,quantity:1}],paymentRecords:[{id:'first',amount:200000,payments:[{method:'Transferencia',amount:200000}]}],payments:[{method:'Transferencia',amount:200000}]}],workOrders:[]};
+ const ctx={...workflow.exports,role,user:'Diana',store:state,currentStore:{current:state},cashOpen:true,editingOrderId:'CP-1',editingWorkOrderId:null,cart:state.orders[0].items,cartTotal:500000,customer:'Cliente',customerPhone:'',customerRuc:'',orderCreationMoment:()=>({date:'2026-10-25',time:'12:00'}),crypto:require('node:crypto').webcrypto,collectionMoment:()=>({date:'2026-10-25',time:'19:00'}),setStore:fn=>{state=fn(state);ctx.currentStore.current=state},clearSale:()=>{},setView:()=>{},setReceiptOrder:()=>{},toast:{success:()=>{},error:message=>{throw Error(message)}}};
+ vm.createContext(ctx);const save=source.slice(source.indexOf('  const saveSale ='),source.indexOf('  const editWorkOrder ='));const payment=source.slice(source.indexOf('  const confirmInlinePayment ='),source.indexOf('  const confirmRefund ='));vm.runInContext(ts.transpileModule(save+'\n'+payment+'\nglobalThis.save=saveSale;',{}).outputText,ctx);
+ assert.equal(ctx.save({advisor:'Diana',invoice:'Sin factura',notes:''},[{method:'Transferencia',amount:200000}],destination),true);
+ if(role==='asesor'){assert.equal(workflow.exports.paidAmount(state.orders[0]),200000);assert.equal(state.orders[0].requestedPayments[0].amount,200000);assert.equal(state.orders[0].paymentRecords.length,1);continue;}
+ assert.equal(workflow.exports.paidAmount(state.orders[0]),400000);assert.equal(state.orders[0].total-workflow.exports.paidAmount(state.orders[0]),100000);assert.equal(state.orders[0].paymentRecords.length,2);assert.equal(state.orders[0].paymentRecords[0].id,'first');assert.equal(state.orders[0].status,'pendiente');
+}
+assert(source.includes('canRegisterPayment={role === "admin" || role === "cajera" || role === "asesor"}'));
+console.log('PASS: advisor/admin/cashier edit-save and update/send add 200,000 to prior 200,000 on 500,000 order; balance 100,000; both records retained; order remains pending.');

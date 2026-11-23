@@ -1,0 +1,40 @@
+const fs=require('node:fs'),path=require('node:path'),ts=require('typescript'),assert=require('node:assert/strict');
+const cache={};function load(file){file=path.resolve(file);if(cache[file])return cache[file].exports;const mod=cache[file]={exports:{}};new Function('module','exports','require',ts.transpileModule(fs.readFileSync(file+'.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText)(mod,mod.exports,name=>name.startsWith('.')?load(path.resolve(path.dirname(file),name)):require(name));return mod.exports;}
+const {validProduction,matchesProductionResponsible}=load('app/team-work-model');
+const job={id:'a',advisor:'Diana',quantity:2,description:'Impresiones',deliveryDate:'2026-11-02',deliveryTime:'15:30',status:'Pendiente',responsible:'Ricardo'};
+assert(validProduction(job));assert(validProduction({...job,responsible:'Tahir'}));
+for(const responsible of [undefined,'','Otra persona'])assert(!validProduction({...job,responsible}));
+assert(matchesProductionResponsible(job,'Todos'));assert(matchesProductionResponsible(job,'Ricardo'));assert(!matchesProductionResponsible(job,'Tahir'));
+assert(matchesProductionResponsible({...job,responsible:'Tahir'},'Todos'));assert(matchesProductionResponsible({...job,responsible:undefined},'Todos'));assert(matchesProductionResponsible({...job,responsible:undefined},'Sin asignar'));
+assert(!validProduction({...job,quantity:0}));
+console.log('PASS: required assignee, complete default list, optional responsible filters and legacy jobs');
+
+const {transferProduction}=load('app/team-work-model');
+const moved=transferProduction(job,'Tahir','2026-10-30T20:10:00Z');assert.equal(moved.responsible,'Tahir');assert.equal(moved.advisor,job.advisor);assert.equal(moved.description,job.description);assert.equal(moved.status,job.status);assert.equal(moved.deliveryTime,job.deliveryTime);assert.equal(job.responsible,'Ricardo');assert(matchesProductionResponsible(moved,'Tahir'));assert(!matchesProductionResponsible(moved,'Ricardo'));assert.throws(()=>transferProduction(job,'Otra persona','now'));
+console.log('PASS: transfer preserves work data and moves responsible filter');
+
+const {updateProductionJob,readyProductionForAdvisor,productionOrderLabel}=load('app/team-work-model');
+const {mergeStores}=load('app/store-merge');
+const readyAt='2026-11-10T14:00:00.000Z', later='2026-11-10T14:01:00.000Z';
+const ready=updateProductionJob({...job,status:'Listo',orderNumber:'ORD-05944'},job,readyAt,true);
+assert.equal(ready.readyAt,readyAt);
+assert(readyProductionForAdvisor(ready,' diana '));
+assert(!readyProductionForAdvisor(ready,'Ricardo'));
+assert.equal(productionOrderLabel(ready),'Orden ORD-05944');
+assert.equal(productionOrderLabel({...job,description:'Copias ORD-05944'}),'Orden ORD-05944');
+assert.equal(productionOrderLabel(job),'Trabajo PROD-A');
+assert.equal(updateProductionJob({...job,status:'Listo'},job,readyAt,false).readyAt,undefined);
+const legacyReady={...job,status:'Listo'};
+assert(!readyProductionForAdvisor(updateProductionJob(legacyReady,legacyReady,later,true),'Diana'));
+const seen={...ready,readySeenAt:readyAt};
+const edited=updateProductionJob({...ready,description:'Impresiones A4'},ready,later,true);
+const merged=mergeStores({productionJobs:[ready]},{productionJobs:[seen]},{productionJobs:[edited]}).productionJobs[0];
+assert.equal(merged.readyAt,readyAt);
+assert.equal(merged.readySeenAt,readyAt);
+assert.equal(merged.description,'Impresiones A4');
+const reopened=updateProductionJob({...merged,status:'En proceso'},merged,later,true);
+assert(!readyProductionForAdvisor(reopened,'Diana'));
+const readyAgain=updateProductionJob({...reopened,status:'Listo'},reopened,later,true);
+assert.equal(readyAgain.readyAt,later);
+assert.notEqual(readyAgain.readyAt,readyAgain.readySeenAt);
+console.log('PASS: advisor routing, order reference, legacy behavior, read synchronization and reopened jobs');

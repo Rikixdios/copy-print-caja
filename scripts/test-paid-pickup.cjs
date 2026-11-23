@@ -1,0 +1,14 @@
+const fs=require('node:fs'),ts=require('typescript'),vm=require('node:vm'),assert=require('node:assert/strict');
+const workflow={exports:{}};vm.runInNewContext(ts.transpileModule(fs.readFileSync('app/order-workflow.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,workflow);
+const {paidAmount,collectionLane,updateWithoutPayment}=workflow.exports;
+const source=fs.readFileSync('app/dashboard.tsx','utf8');
+const payment=source.slice(source.indexOf('  const confirmInlinePayment ='),source.indexOf('  const confirmRefund ='));
+let state={orders:[{id:'CP-1',customer:'Cliente',total:150000,status:'pendiente',items:[],productionStatus:'Listo',paymentRecords:[{id:'deposit',amount:50000,payments:[{method:'Transferencia',amount:50000}]}],payments:[{method:'Transferencia',amount:50000}]}],workOrders:[]};
+const ctx={currentStore:{current:state},cashOpen:true,user:'Admi',paidAmount,updateWithoutPayment,crypto:require('node:crypto').webcrypto,collectionMoment:()=>({date:'2026-10-25',time:'19:00'}),setStore:fn=>{state=fn(state);ctx.currentStore.current=state},setReceiptOrder:()=>{},setView:()=>{},toast:{success:()=>{},error:()=>false}};
+vm.createContext(ctx);vm.runInContext(ts.transpileModule(payment+'\nglobalThis.confirm=confirmInlinePayment;',{}).outputText,ctx);
+assert.equal(ctx.confirm(state.orders[0],[{method:'Transferencia',amount:100000}],{...state.orders[0],notes:'Retira mañana'},true),true);
+let order=state.orders[0];assert.equal(paidAmount(order),150000);assert.equal(order.paymentRecords.length,2);assert.equal(order.paymentRecords[0].id,'deposit');assert.equal(order.status,'pendiente');assert.equal(order.notes,'Retira mañana');assert.equal(collectionLane(order),'senas');
+assert.notEqual(ctx.confirm(order,[{method:'Transferencia',amount:100000}]),true);assert.equal(state.orders[0].paymentRecords.length,2);
+assert.equal(ctx.confirm(order,[]),true);assert.equal(state.orders[0].status,'cobrado');assert.equal(state.orders[0].paymentRecords.length,2);assert.equal(paidAmount(state.orders[0]),150000);assert.notEqual(ctx.confirm(state.orders[0],[]),true);
+assert.equal(source.includes('awaitingPickup'),false);
+console.log('PASS: Save adds 100,000 to 50,000 without closing; Cobrar completo closes without duplicating collections; paid historical orders excluded from queue.');

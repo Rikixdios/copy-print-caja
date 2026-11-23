@@ -1,0 +1,1 @@
+export function compactImportFingerprint(value:string){if(!value.startsWith('['))return value;let a=2166136261,b=2246822519;for(let i=0;i<value.length;i++){const code=value.charCodeAt(i);a=Math.imul(a^code,16777619);b=Math.imul(b^code,3266489917);}return `credit-v1-${(a>>>0).toString(16)}-${(b>>>0).toString(16)}-${value.length}`;}

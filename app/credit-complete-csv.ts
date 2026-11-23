@@ -1,0 +1,31 @@
+import {compactImportFingerprint} from './import-fingerprint';
+import {nextOrderId} from './order-identifiers';
+import {parseCsv,csvDate,csvNumber} from './credit-csv';
+import type {CreditAccount,CreditOrder,CreditPayment} from './business-model';
+export function isCompleteCreditCsv(headers:string[]){return ['Tipo','Aplicado a','Monto pagado','Precio total'].every(key=>headers.includes(key));}
+export function parseCompleteCreditCsv(text:string){
+ const {headers,rows}=parseCsv(text);if(!isCompleteCreditCsv(headers))throw new Error('El archivo no es un export completo de créditos');
+ const data=rows.map((row,i)=>{const get=(key:string)=>row[headers.indexOf(key)]||'';const customer=get('Cliente'),code=get('Código').toUpperCase(),type=get('Tipo'),date=csvDate(get('Fecha'),'');if(!customer||!code||!date||!['CREDITO','PAGO'].includes(type))throw new Error(`Fila ${i+2}: cliente, código, fecha o tipo inválido`);const amount=csvNumber(get('Precio total'));if(!Number.isFinite(amount)||amount<=0)throw new Error(`Fila ${i+2}: importe inválido`);return {customer,code,type,date,amount,ruc:get('RUC'),notes:get('Notas'),description:get('Descripción'),quantity:csvNumber(get('Unidad')),price:csvNumber(get('Precio unitario')),paid:csvNumber(get('Monto pagado')),balance:csvNumber(get('Saldo pendiente')),advisor:get('Asesor'),withdrawnBy:get('Retirante'),payer:get('Pagador'),applied:get('Aplicado a'),paymentDetail:get('Detalle del pago')};});
+ const codes=new Set<string>();for(const row of data){if(codes.has(row.code))throw new Error(`Código repetido: ${row.code}`);codes.add(row.code);if(row.type==='CREDITO'&&(!(row.quantity>0)||!Number.isFinite(row.price)||Math.abs(row.quantity*row.price-row.amount)>0.01||!(row.paid>=0)||Math.abs(row.amount-row.paid-row.balance)>0.01))throw new Error(`Crédito ${row.code}: cantidades, total o saldo no coinciden`);}
+ return data;
+}
+export type CompleteCreditData=ReturnType<typeof parseCompleteCreditCsv>;
+const customerKey=(name:string)=>name.trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+export function prepareCompleteCreditImport(accountsBefore:CreditAccount[],ordersBefore:CreditOrder[],paymentsBefore:CreditPayment[],data:CompleteCreditData,today:string,id:()=>string,sequence=0){
+ const accounts=accountsBefore.map(a=>({...a}));const assignedIds:{id:string}[]=[...ordersBefore];const importedOrders:CreditOrder[]=[],importedPayments:CreditPayment[]=[];const replaced=new Set<string>();let skipped=0;const warnings:string[]=[];
+ for(const customer of new Set(data.map(row=>row.customer))){const entries=data.filter(row=>row.customer===customer),first=entries[0],fingerprint=compactImportFingerprint(JSON.stringify(entries));let account=accounts.find(a=>first.ruc&&a.ruc===first.ruc)||accounts.find(a=>customerKey(a.name)===customerKey(customer));if(!account){account={id:id(),name:customer,ruc:first.ruc,phone:'',createdDate:entries.map(r=>r.date).sort()[0]||today};accounts.push(account);}else if(!account.ruc)account.ruc=first.ruc;
+ const existing=ordersBefore.filter(o=>o.creditAccountId===account!.id),existingPayments=paymentsBefore.filter(p=>p.accountId===account!.id);
+ if(existing.some(o=>!!o.importCompleteFingerprint&&compactImportFingerprint(o.importCompleteFingerprint)===fingerprint)){skipped+=entries.length;continue;}
+ if(existing.some(o=>!o.importedSummary))throw new Error(`La cuenta ${customer} ya tiene productos. No se reemplazaron para evitar perder cambios. Eliminá esa cuenta solo si querés volver a cargarla completa.`);
+ replaced.add(account.id);
+ const orders=entries.filter(row=>row.type==='CREDITO').map(row=>{const orderId=nextOrderId(assignedIds,sequence);assignedIds.push({id:orderId});return ({id:orderId,creditAccountId:account!.id,creditCode:row.code,customer:account!.name,ruc:account!.ruc,phone:account!.phone,date:row.date,createdAt:'00:00',advisor:row.advisor,notes:row.notes,withdrawnBy:row.withdrawnBy,total:row.amount,items:[{id:1,name:row.description,quantity:row.quantity,price:row.price,category:'Importado CSV'}],status:row.paid>=row.amount?'cobrado':'pendiente',payments:[],paymentRecords:[],importedDeclaredPaid:row.paid,importCompleteFingerprint:fingerprint}) as CreditOrder;});
+ for(const row of entries.filter(row=>row.type==='PAGO')){const allocations:CreditPayment['allocations']=[];let allocated=0;
+ for(const part of row.applied?row.applied.split(/\s*\|\s*/):[]){const match=part.match(/^([^=]+)=([^=]+)$/);if(!match)throw new Error(`Pago ${row.code}: aplicación inválida`);const order=orders.find(o=>o.creditCode===match[1].trim().toUpperCase()),amount=csvNumber(match[2]);if(!order||!(amount>0))throw new Error(`Pago ${row.code}: crédito o importe aplicado inválido`);const recordId=`${row.code}-${allocations.length+1}`;order.paymentRecords!.push({id:recordId,date:row.date,time:'00:00',amount,kind:'Abono',payments:[{method:'No especificado',amount}],cashier:row.advisor});allocations.push({orderId:order.id,recordId,amount});allocated+=amount;}
+ if(allocated>row.amount+0.01)throw new Error(`Pago ${row.code}: se aplicó más que el importe del pago`);
+ importedPayments.push({id:row.code,accountId:account.id,date:row.date,time:'00:00',amount:row.amount,methods:[{method:'No especificado',amount:row.amount}],cashier:row.advisor,payer:row.payer,note:[row.description,row.paymentDetail,first.notes].filter(Boolean).join(' · '),allocations,imported:true,unallocatedAmount:row.amount-allocated});}
+ for(const order of orders){const allocated=order.paymentRecords!.reduce((sum,r)=>sum+r.amount,0);order.importedPaidAdjustment=(order.importedDeclaredPaid||0)-allocated;if(order.importedPaidAdjustment)warnings.push(`${customer} · ${order.creditCode}: pagado informado ${order.importedDeclaredPaid}; aplicado ${allocated}.`);}
+ importedOrders.push(...orders);
+ }
+ const retained=ordersBefore.filter(o=>!replaced.has(o.creditAccountId||''));const retainedCodes=new Set(retained.map(o=>o.creditCode));for(const o of importedOrders)if(retainedCodes.has(o.creditCode))throw new Error(`El código ${o.creditCode} ya existe en otra cuenta`);
+ return {accounts,orders:[...importedOrders,...retained],payments:[...importedPayments,...paymentsBefore.filter(p=>!replaced.has(p.accountId))],added:importedOrders.length,paymentCount:importedPayments.length,skipped,warnings};
+}

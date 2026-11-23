@@ -1,0 +1,116 @@
+/* A compact festive banner; data and control handlers are unchanged. */
+.christmas-top{display:grid;grid-template-columns:minmax(0,1fr);position:relative;isolation:isolate;background:#751625}
+.christmas-top .app-header.redesigned-header{grid-area:1/1/2/2;position:relative;top:auto;display:grid;grid-template-columns:auto minmax(210px,360px) minmax(0,1fr);align-items:center;gap:20px;height:auto!important;min-height:100px;padding:12px 28px 6px;background:radial-gradient(ellipse at 36% 0,#b63243,transparent 65%),linear-gradient(110deg,#631320,#8f2030 55%,#471523);border-color:#d5ac6740;z-index:2}
+.christmas-top .app-header .system-logo{width:179px;height:43px;object-fit:contain;filter:invert(1);background:transparent;padding:0;border-radius:0}
+.christmas-top .app-header.redesigned-header nav{grid-column:auto;min-width:0;justify-content:flex-end;flex-wrap:wrap;gap:9px}
+.christmas-top .app-header.redesigned-header .header-attendance{width:auto;flex-wrap:nowrap;gap:6px}
+.christmas-sleigh-slot{display:flex;align-items:center;gap:10px;width:100%;height:80px;pointer-events:none;user-select:none}
+.christmas-sleigh{display:block;flex:1.65;min-width:0;width:62%;height:100%}
+.christmas-friends{display:block;flex:1;min-width:0;width:38%;height:100%}
+.christmas-garland{position:absolute;top:0;left:0;width:100%;height:8px;background:repeating-linear-gradient(120deg,#23523b 0 6px,#183c2c 7px 12px);display:flex;justify-content:space-around;z-index:4;box-shadow:0 3px 8px #210c1766;pointer-events:none}
+.christmas-garland i{position:relative;top:5px;width:4px;height:6px;border-radius:50%;background:#ffe6a6;box-shadow:0 0 7px 2px #ffce6788;transform:translateY(calc(var(--bulb)*2px))}
+.christmas-top .redesigned-utility{grid-area:2/1/3/2;position:relative;background:#1d2029;border-color:#b9686940;z-index:3;padding:8px 28px;gap:16px}
+.christmas-top .utility-status-group{flex:1;gap:16px;flex-wrap:nowrap}
+.christmas-top .header-product-search{width:280px;max-width:100%;flex:0 1 280px}
+.christmas-top .header-product-search form:focus-within{border-color:#71ad91;box-shadow:0 0 0 2px #71ad9122}
+.christmas-snow{grid-area:1/1/2/2;position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden;container-type:size;mask-image:linear-gradient(#000 0%,#000 78%,transparent 100%)}
+.christmas-snow i{position:absolute;top:-8px;left:var(--left);width:var(--size);height:var(--size);border-radius:50%;background:#fff;opacity:1;box-shadow:0 0 2px #fff,0 1px 3px #17284dcc;animation:christmas-fall var(--duration) var(--delay) linear infinite}
+@keyframes christmas-fall{from{transform:translate3d(0,-6px,0);opacity:0}10%,78%{opacity:1}90%{opacity:.75}to{transform:translate3d(var(--drift),calc(100cqh + 12px),0);opacity:0}}
+@media(max-width:1100px) and (min-width:761px){.christmas-top .app-header.redesigned-header{grid-template-columns:auto minmax(180px,280px) minmax(0,1fr);gap:14px;padding-inline:20px}.christmas-top .app-header .system-logo{width:150px}.christmas-top .app-header.redesigned-header nav{gap:6px}.christmas-top .app-header.redesigned-header .header-attendance{flex-wrap:wrap;justify-content:flex-end}}
+@media(max-width:760px){.christmas-top .app-header.redesigned-header{grid-template-columns:130px minmax(0,1fr);gap:6px 16px;min-height:0;padding:13px 14px 9px}.christmas-top .app-header .system-logo{width:130px;height:36px}.christmas-sleigh-slot{height:66px;gap:5px}.christmas-top .app-header.redesigned-header nav{grid-column:1/-1;width:100%;gap:8px;justify-content:flex-end}.christmas-top .app-header.redesigned-header.with-attendance .header-attendance{flex-wrap:wrap;justify-content:flex-start}.christmas-top .redesigned-utility{padding:9px 14px}.christmas-top .utility-status-group{width:100%;flex-basis:100%;flex-wrap:wrap;gap:10px}.christmas-top .header-product-search{flex:1;min-width:165px}.christmas-top .redesigned-utility>.queue-bar{width:100%;margin:0;justify-content:space-between}.christmas-snow i:nth-child(n+21){display:none}}
+@media(prefers-reduced-motion:reduce){.christmas-snow{display:none}.christmas-snow i{animation:none}}
+@media print{.christmas-garland,.christmas-snow,.christmas-sleigh-slot{display:none}.christmas-top{background:transparent}}
+/* Red action palette. Production status colors and report charts keep their meaning. */
+:root{--primary:#f01736;--primary-foreground:#fff;--accent:#54232d;--accent-foreground:#ffe4e8;--christmas-action:linear-gradient(180deg,#ff2444 0%,#e40d30 48%,#b70523 100%);--christmas-green:linear-gradient(180deg,#169352 0%,#107342 48%,#064c2d 100%)}
+.workspace [data-slot="button"][data-variant="default"],body [data-slot="button"][data-variant="default"],.send-button,.close-cash,.cash-exit-button,.order-main-actions button.order-save:last-child,.order-timer-actions button:first-child,.inline-checkout .send-button{background:var(--christmas-action)!important;border-color:#ff526b!important;color:#fff!important}
+.side-nav .nav-button.active,.management-menu-list .nav-button.active,.order-payment-tabs button.selected,.management-tabs button[aria-pressed=true]{background:#ef1232;color:#fff;border-color:#ff526b}
+.side-nav .nav-button:hover,.management-menu-list .nav-button:hover{background:#40232c;color:#fff0f2}
+.nav-button b{background:var(--christmas-action);color:#fff}
+.header-attendance .header-mark-almuerzo,.header-attendance .header-mark-regreso,.header-attendance .header-mark-entrada,.christmas-top .queue-controls .queue-next,.shared-quote-actions button{background:var(--christmas-action);border-color:#d1505c;color:#fff}
+
+
+/* Holiday controls retain disabled and status semantics. */
+.christmas-top .header-attendance .header-mark-entrada,.christmas-top .header-attendance .header-mark-regreso{background:#23724f;border-color:#469b73;color:#fff}
+.christmas-top .header-attendance .header-mark-almuerzo{background:#a52b3a;color:#fff}
+.christmas-top .header-attendance .header-mark-salida{background:#b52b3c;color:#fff}
+
+/* Keep Santa in frame and leave the artwork visible through the controls. */
+.christmas-top .app-header.redesigned-header{
+  grid-template-columns:auto minmax(0,1fr);align-items:center;min-height:180px;padding:18px 28px;gap:18px;
+  background-color:#35316b;background-image:url('/christmas/cover-navidad.png');
+  background-size:cover;background-position:center 25%;
+}
+.christmas-top .app-header.redesigned-header>div:first-child{justify-self:start;background:transparent;border:0;border-radius:0;padding:8px 0;box-shadow:none;filter:drop-shadow(0 2px 3px #172137)}
+.christmas-top .app-header.redesigned-header nav{justify-self:end;max-width:100%;padding:6px 0;background:transparent;border:0;border-radius:0;box-shadow:none;z-index:5}
+.christmas-top .app-header.redesigned-header.with-attendance nav{flex-wrap:wrap}
+.christmas-top .app-header.redesigned-header .header-attendance{flex-wrap:wrap;gap:8px}
+.christmas-top .header-attendance .header-mark{height:36px;font-size:14px;white-space:nowrap;background:rgba(32,43,67,.18);border:1px solid #ffffff8c;box-shadow:0 2px 6px #16203d26;backdrop-filter:blur(3px);color:#fff;text-shadow:0 1px 3px #121b35}
+.christmas-top .header-attendance .header-mark-entrada,.christmas-top .header-attendance .header-mark-regreso{background:rgba(20,91,65,.25)}
+.christmas-top .header-attendance .header-mark-almuerzo,.christmas-top .header-attendance .header-mark-salida{background:rgba(255,20,58,.60)}
+.christmas-top .header-mark-time{color:#fff;text-shadow:0 1px 3px #121b35}
+.christmas-top .header-attendance .header-mark:disabled{opacity:1;filter:none;background:rgba(32,43,67,.15);color:#f0f1f5;border-style:dashed;cursor:not-allowed}
+.christmas-top .header-attendance .header-mark:hover:not(:disabled){background:rgba(32,43,67,.4)}
+.christmas-top .app-header .user-icon-button,.christmas-top .app-header .caja-logout{background:rgba(32,43,67,.18);backdrop-filter:blur(3px);color:#fff;border:1px solid #ffffff80;text-shadow:0 1px 3px #121b35}
+.christmas-top .app-header .caja-logout{border-radius:8px;padding:9px 12px}
+@media(max-width:1100px) and (min-width:761px){.christmas-top .app-header.redesigned-header{grid-template-columns:auto minmax(0,1fr);padding:16px 20px}.christmas-top .app-header.redesigned-header nav{grid-column:auto}}
+@media(max-width:760px){
+  .christmas-top .app-header.redesigned-header{grid-template-columns:minmax(0,1fr);min-height:180px;padding:14px;gap:20px;background-size:auto 100%;background-position:56% center}
+  .christmas-top .app-header.redesigned-header>div:first-child{align-self:start;padding:0}
+  .christmas-top .app-header.redesigned-header nav{grid-column:1;width:auto;max-width:100%;justify-self:stretch;padding:0;gap:8px}
+  .christmas-top .app-header.redesigned-header.with-attendance .header-attendance{flex:1 1 100%;justify-content:flex-start;gap:8px}
+  .christmas-top .header-attendance .header-mark{font-size:12px;padding:6px 9px}
+}
+
+/* Brighter red actions, preserving the translucent header treatment. */
+.christmas-top .header-attendance .header-mark-almuerzo:hover:not(:disabled),.christmas-top .header-attendance .header-mark-salida:hover:not(:disabled){background:rgba(255,20,58,.78)}
+
+/* Distinct white flakes remain readable over both sky and snow. */
+.christmas-snow i:nth-child(4n){background:transparent;box-shadow:none}
+.christmas-snow i:nth-child(4n)::before{content:'❄';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;font-size:14px;line-height:1;text-shadow:0 1px 3px #17284d,0 0 3px #fff}
+
+/* Keep account tools at the banner edge; attendance precedes the live queue. */
+.christmas-top .app-header.redesigned-header .system-logo{width:215px;height:52px}
+.christmas-top .app-header.redesigned-header nav{position:absolute;right:28px;bottom:12px;display:flex;align-items:center;justify-content:flex-end;width:auto;max-width:calc(100% - 40px);margin:0;padding:0;gap:10px}
+.christmas-top .app-header.redesigned-header nav .top-icon-button,.christmas-top .app-header.redesigned-header nav .user-icon-button{color:#ffdc79;border-color:#e7bd55;background:rgba(53,35,12,.36);box-shadow:0 1px 7px #1b183644;text-shadow:none;backdrop-filter:blur(3px)}
+.christmas-top .app-header.redesigned-header nav .top-icon-button:hover,.christmas-top .app-header.redesigned-header nav .user-icon-button:hover{background:rgba(114,77,16,.6);color:#fff0b4}
+.christmas-top .redesigned-utility>.header-attendance{order:0;flex:0 0 auto;display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;margin:0}
+.christmas-top .redesigned-utility .header-attendance .header-mark{width:auto;min-width:0;white-space:nowrap}
+@media(max-width:1200px){.christmas-top .redesigned-utility>.utility-status-group{flex-basis:100%}.christmas-top .redesigned-utility>.queue-bar{width:auto;margin-left:auto}}
+@media(max-width:760px){
+  .christmas-top .app-header.redesigned-header{display:flex;align-items:center;min-height:180px}
+  .christmas-top .app-header.redesigned-header>div:first-child{align-self:center}
+  .christmas-top .app-header.redesigned-header .system-logo{width:155px;height:42px}
+  .christmas-top .app-header.redesigned-header nav{right:14px;bottom:10px;left:auto;width:auto;gap:8px;justify-self:auto}
+  .christmas-top .redesigned-utility>.header-attendance{flex-basis:100%;justify-content:flex-start}
+  .christmas-top .redesigned-utility>.queue-bar{width:100%;margin-left:0}
+}
+
+/* Opaque gold tools with a single, centered user glyph. */
+.christmas-top .app-header.redesigned-header nav .top-icon-button,.christmas-top .app-header.redesigned-header nav .user-icon-button{display:inline-flex;align-items:center;justify-content:center;gap:0;padding:0;background:#f3c34e;color:#452d06;border:1px solid #ffe69a;box-shadow:0 2px 6px #33250e4d;backdrop-filter:none;text-shadow:none}
+.christmas-top .app-header.redesigned-header nav .top-icon-button:hover,.christmas-top .app-header.redesigned-header nav .user-icon-button:hover{background:#ffda71;color:#322004}
+.christmas-top .app-header.redesigned-header nav .user-icon-button>svg:not(.account-user-symbol){display:none}
+.christmas-top .app-header.redesigned-header nav .user-icon-button>.account-user-symbol,.christmas-top .app-header.redesigned-header nav .top-icon-button>svg{display:block;width:20px!important;height:20px!important;flex:none;margin:0;color:inherit;stroke-width:2}
+.side-nav .nav-button.active,.management-menu-list .nav-button.active{background:#ef1232;color:#fff;border-color:#ff526b}
+.side-nav .nav-button.active:hover,.management-menu-list .nav-button.active:hover{background:#ff1b3d;color:#fff}
+
+/* Production heading in evergreen, red and gold. Status colors are independent. */
+.business-view.team-work-view .business-heading{background:var(--christmas-green);border:1px solid #d9b455;box-shadow:0 2px 7px #164d3326;color:#fff}
+.business-view.team-work-view .business-heading p{color:#f1fff4}
+
+/* Raised seasonal controls: saturated at the top, deeper at the bottom. */
+.side-nav .nav-button.active,.management-menu-list .nav-button.active,.side-nav .nav-button.active:hover,.management-menu-list .nav-button.active:hover,.order-payment-tabs button.selected,.management-tabs button[aria-pressed=true]{background:var(--christmas-action);color:#fff;box-shadow:inset 0 1px 0 #ffffff38,0 2px 5px #900b202b}
+.christmas-top .header-attendance .header-mark-entrada,.christmas-top .header-attendance .header-mark-regreso,.christmas-top .header-attendance .header-mark-entrada:hover:not(:disabled),.christmas-top .header-attendance .header-mark-regreso:hover:not(:disabled){background:var(--christmas-green);border-color:#48b47b;color:#fff}
+.christmas-top .header-attendance .header-mark-almuerzo,.christmas-top .header-attendance .header-mark-salida,.christmas-top .header-attendance .header-mark-almuerzo:hover:not(:disabled),.christmas-top .header-attendance .header-mark-salida:hover:not(:disabled),[data-slot="button"][data-variant="destructive"]{background:var(--christmas-action);border-color:#ff526b;color:#fff}
+.christmas-top .header-attendance .header-mark:not(:disabled){box-shadow:inset 0 1px 0 #ffffff38,0 2px 4px #0003;text-shadow:0 1px 1px #0003}
+.christmas-top .header-attendance .header-mark:disabled{opacity:.65}
+.team-work-view select.team-status-select.team-green,.history-table .production-select.production-listo{background:var(--christmas-green)!important}
+.team-work-view select.team-status-select.team-red{background:var(--christmas-action)!important}
+.caja-access-form button,.caja-access-primary{background:var(--christmas-action)}
+
+/* One short shimmer and a golden dust burst when a tab becomes active. */
+.side-nav .nav-button,.management-menu-list .nav-button{position:relative;isolation:isolate;overflow:hidden;transition:box-shadow .18s ease,filter .18s ease}
+.side-nav .nav-button.active::before,.management-menu-list .nav-button.active::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(110deg,transparent 25%,#fff5cd99 49%,transparent 73%);transform:translateX(-140%);animation:christmas-tab-shimmer .65s ease-out both}
+.side-nav .nav-button.active::after,.management-menu-list .nav-button.active::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(circle at 16% 35%,#ffe9a6 0 1.5px,transparent 2.5px),radial-gradient(circle at 36% 72%,#fff9db 0 1px,transparent 2px),radial-gradient(circle at 61% 22%,#ffd572 0 1.5px,transparent 2.5px),radial-gradient(circle at 84% 60%,#fff3bc 0 1px,transparent 2px);animation:christmas-tab-dust .8s ease-out both}
+@keyframes christmas-tab-shimmer{from{transform:translateX(-140%);opacity:0}20%{opacity:1}to{transform:translateX(140%);opacity:0}}
+@keyframes christmas-tab-dust{0%{opacity:0;transform:translateY(7px) scale(.7)}30%{opacity:1}100%{opacity:0;transform:translateY(-10px) scale(1.15)}}
+@media(prefers-reduced-motion:reduce){.side-nav .nav-button,.management-menu-list .nav-button{transition:none}.side-nav .nav-button.active::before,.side-nav .nav-button.active::after,.management-menu-list .nav-button.active::before,.management-menu-list .nav-button.active::after{display:none;animation:none}}
